@@ -1,10 +1,10 @@
 "use client"
-import {useState, useEffect} from "react";
+import {useState, useEffect, ReactElement} from "react";
 import {fetchPics} from "@/app/util/pics";
 import Image from "next/image";
 
 export function Selects() {
-    const [imgList, setImgList] = useState<any[]>([]);
+    const [imgList, setImgList] = useState<ReactElement[]>([]);
 
     useEffect(() => {
         const pics = async () => {
@@ -13,7 +13,7 @@ export function Selects() {
                 console.error(error);
             } else {
 
-                const newImgList = [];
+                const newImgList: ReactElement[] = [];
                 data?.forEach((item, index) =>{
                     newImgList.push(<Image
                         src={process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/Selects/' + item.name}

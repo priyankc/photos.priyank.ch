@@ -20,8 +20,9 @@ export function HomeGallery() {
                         src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucketName}/${item.name}`}
                         alt={'image'}
                         key={index}
-                        width='400'
-                        height='400'
+                        width='10000'
+                        height='10000'
+                        className="w-max h-auto"
                     />);
 
                 });

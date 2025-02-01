@@ -1,9 +1,9 @@
-import {Selects} from "@/app/components/selects";
+import {HomeGallery} from "@/app/components/HomeGallery";
 
 export default function Home() {
   return <div>
       Welcome to my Home!
       First time with NextJS
-      <Selects />
+      <HomeGallery />
   </div>
 }

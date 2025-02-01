@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export default function SignIn() {
     const { data: session } = useSession();
+
     if (!session) {
         return <button type="button"
                 onClick={() => signIn("google")}

@@ -1,14 +1,15 @@
 "use client"
 import {useState, useEffect, ReactElement} from "react";
-import {fetchPics} from "@/app/util/pics";
+import {fetchPicsFromAlbum} from "@/app/util/Photos";
 import Image from "next/image";
 
-export function Selects() {
+export function HomeGallery() {
     const [imgList, setImgList] = useState<ReactElement[]>([]);
+    const bucketName = process.env.HOME_PAGE_BUCKET || 'Home';
 
     useEffect(() => {
-        const pics = async () => {
-            const {data, error} = await fetchPics()
+        const photos = async () => {
+            const {data, error} = await fetchPicsFromAlbum(bucketName)
             if (error) {
                 console.error(error);
             } else {
@@ -16,7 +17,7 @@ export function Selects() {
                 const newImgList: ReactElement[] = [];
                 data?.forEach((item, index) =>{
                     newImgList.push(<Image
-                        src={process.env.NEXT_PUBLIC_SUPABASE_URL + '/storage/v1/object/public/Selects/' + item.name}
+                        src={`${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucketName}/${item.name}`}
                         alt={'image'}
                         key={index}
                         width='400'
@@ -27,8 +28,8 @@ export function Selects() {
                 setImgList(newImgList);
             }
         }
-        pics();
-    }, []);
+        photos();
+    }, [bucketName]);
 
     return <div>{imgList}</div>;
 }

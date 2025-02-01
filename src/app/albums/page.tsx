@@ -4,14 +4,17 @@ import { useState, useEffect } from "react";
 import { getAlbumsWithFirstImage } from "@/app/util/Albums";
 import Image from "next/image";
 
+type Album = {
+  album: string;
+  firstImage: string | null;
+}
+
 export default function AlbumsPage() {
-  const [albums, setAlbums] = useState([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getAlbumsWithFirstImage();
-      console.log(data);
-      console.log("inside useeffect");
       setAlbums(data);
     }
     fetchData();

@@ -1,33 +1,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { listAllAlbums } from "@/app/util/Albums";
+import { getAlbumsWithFirstImage } from "@/app/util/Albums";
+import Image from "next/image";
 
-export default function Albums() {
-  const [albumList, setAlbumList] = useState<string[]>([]);
+export default function AlbumsPage() {
+  const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    const fetchAlbums = async () => {
-      try {
-        const albums = await listAllAlbums();
-        if (albums) {
-          setAlbumList(albums); // Store album names as strings instead of JSX elements
-        }
-      } catch (error) {
-        console.error("Error fetching albums:", error);
-      }
-    };
-
-    fetchAlbums();
+    async function fetchData() {
+      const data = await getAlbumsWithFirstImage();
+      console.log(data);
+      console.log("inside useeffect");
+      setAlbums(data);
+    }
+    fetchData();
   }, []);
 
   return (
-      <div>
-        {albumList.length > 0 ? (
-            albumList.map((albumName, index) => <p key={index}>{albumName}</p>)
-        ) : (
-            <p>No albums found.</p>
-        )}
+      <div className="flex flex-col items-center justify-center p-4">
+        <h1 className="text-xl font-bold mb-4">Albums</h1>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {albums.map(({ album, firstImage }) => (
+              <div key={album} className="p-4 border rounded-lg shadow-md">
+                <h2 className="font-semibold">{album}</h2>
+                {firstImage ? (
+                    <Image src={firstImage} alt={album}  width='250' height='250'
+                           className="w-full h-auto rounded-lg mt-2" />
+                ) : (
+                    <p className="text-gray-500">No images</p>
+                )}
+              </div>
+          ))}
+        </div>
       </div>
   );
 }

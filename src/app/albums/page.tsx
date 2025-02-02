@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { getAlbumsWithFirstImage } from "@/app/util/Albums";
 import Image from "next/image";
+import Link from "next/link";
 
 type Album = {
   album: string;
@@ -28,8 +29,10 @@ export default function AlbumsPage() {
               <div key={album} className="p-4 border rounded-lg shadow-md">
                 <h2 className="font-semibold">{album}</h2>
                 {firstImage ? (
+                    <Link href={`/albums/${album}`}>
                     <Image src={firstImage} alt={album}  width='250' height='250'
                            className="w-full h-auto rounded-lg mt-2" />
+                    </Link>
                 ) : (
                     <p className="text-gray-500">No images</p>
                 )}

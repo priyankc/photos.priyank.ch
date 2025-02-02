@@ -20,12 +20,17 @@ async function getImages(album: string) {
   }));
 }
 
-export default async function AlbumPage({ params }: { params: { album: string } }) {
-  const images = await getImages(params.album);
+export default async function AlbumPage({
+  params,
+}: {
+  params: Promise<{ album: string }>
+}) {
+  const album = (await params).album;
+  const images = await getImages(album);
 
   return (
       <div className="min-h-screen flex flex-col items-center justify-center p-6">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">{params.album} Album</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">{album} Album</h1>
 
         {images.length === 0 ? (
             <p className="text-gray-500">No images found in this album.</p>
@@ -36,8 +41,8 @@ export default async function AlbumPage({ params }: { params: { album: string } 
                     <Image
                         src={url}
                         alt={name}
-                        width={1000}
-                        height={1000}
+                        width={200}
+                        height={200}
                         className="w-full h-auto object-cover rounded-lg"
                         priority
                     />

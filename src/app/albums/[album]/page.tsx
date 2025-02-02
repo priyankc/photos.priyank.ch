@@ -37,17 +37,19 @@ export default async function AlbumPage({
         ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl">
               {images.map(({ name, url }) => (
-                  <div key={name} className="bg-white p-3 rounded-lg shadow-md hover:shadow-lg transition">
-                    <Image
-                        src={url}
-                        alt={name}
-                        width={200}
-                        height={200}
-                        className="w-full h-auto object-cover rounded-lg"
-                        priority
-                    />
-                    <p className="text-sm text-gray-600 mt-2 text-center">{name}</p>
-                  </div>
+                  <Link key={name} href={`/albums/${album}/${encodeURIComponent(name)}`}>
+                    <div className="bg-white p-3 rounded-lg shadow-md hover:shadow-lg transition cursor-pointer">
+                      <Image
+                          src={url}
+                          alt={name}
+                          width={300}
+                          height={300}
+                          className="w-full h-48 object-cover rounded-lg"
+                          priority
+                      />
+                      <p className="text-sm text-gray-600 mt-2 text-center">{name}</p>
+                    </div>
+                  </Link>
               ))}
             </div>
         )}
